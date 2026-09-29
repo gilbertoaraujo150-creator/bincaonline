@@ -11,7 +11,7 @@ body{min-height:100%;display:flex;flex-direction:column;align-items:center;paddi
 img{width:100%;max-width:420px;height:auto;border-radius:16px;display:block}
 p{color:#000;font-size:18px;font-weight:600;text-align:center;margin:22px 0 14px;max-width:420px}
 a{display:block;width:100%;max-width:420px;box-sizing:border-box;padding:16px 24px;background:#25d366;color:#fff;border-radius:999px;text-decoration:none;font-weight:700;font-size:18px;text-align:center}
-#bar{position:fixed;left:0;bottom:0;height:4px;width:0;background:#25d366;padding-bottom:env(safe-area-inset-bottom,0px);animation:fill 5s linear forwards}
+#bar{position:fixed;left:0;bottom:0;height:4px;width:0;background:#25d366;padding-bottom:env(safe-area-inset-bottom,0px);animation:fill 2s linear forwards}
 @keyframes fill{to{width:100%}}
 </style>
 </head>
@@ -21,8 +21,19 @@ a{display:block;width:100%;max-width:420px;box-sizing:border-box;padding:16px 24
 <a href="https://wa.me/5516991799756?text=Ol%C3%A1!%20Posso%20ter%20mais%20informa%C3%A7%C3%B5es%20sobre%20isso%3F" target="_top">Conversar com Bianca</a>
 <div id="bar"></div>
 <script>
-var url = document.querySelector("a").href;
-setTimeout(function(){ try{ window.top.location.href = url; }catch(e){ window.location.href = url; } }, 5000);
+var numero = "5516991799756";
+var texto = "Olá! Posso ter mais informações sobre isso?";
+var web = "https://wa.me/" + numero + "?text=" + encodeURIComponent(texto);
+var app = "whatsapp://send?phone=" + numero + "&text=" + encodeURIComponent(texto);
+var abriuApp = false;
+document.addEventListener("visibilitychange", function(){ if (document.hidden) abriuApp = true; });
+window.addEventListener("pagehide", function(){ abriuApp = true; });
+setTimeout(function(){
+  try { window.top.location.href = app; } catch(e) { window.location.href = app; }
+  setTimeout(function(){
+    if (!abriuApp) { try { window.top.location.href = web; } catch(e) { window.location.href = web; } }
+  }, 2000);
+}, 2000);
 </script>
 </body>
 </html>
